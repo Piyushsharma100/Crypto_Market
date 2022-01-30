@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import axios from "axios";
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AliceCarousel from "react-alice-carousel";
 import { TrendingCoins } from "../../config/api";
 import { CryptoState } from "../../CryptoContext";
@@ -22,6 +21,9 @@ import { numberWithCommas } from "../CoinTable";
 //     color: "white",
 //   },
 // }));
+// export function numberWithCommas(x) {
+//   return x.toString().replace(/\B(?=(\d{3})+(?!\d)/g, ",");
+// }
 
 const Carousel = () => {
   const [trending, setTrending] = useState([]);
@@ -29,14 +31,15 @@ const Carousel = () => {
   const { currency, symbol } = CryptoState(); // take currency and symbol
   const fetchTrendingCoins = async () => {
     const { data } = await axios.get(TrendingCoins(currency));
+    console.log(data);
     setTrending(data);
   };
-  console.log(trending);
   useEffect(() => {
     fetchTrendingCoins();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currency]);
-  const useStyles = makeStyles(() => ({
+
+  const useStyles = makeStyles((theme) => ({
     carousel: {
       height: "50%",
       dispaly: "flex",
@@ -44,7 +47,7 @@ const Carousel = () => {
     },
     carouselItem: {
       display: "flex",
-      flexDirection: "coloumn",
+      flexDirection: "column",
       alignItems: "center",
       cursor: "pointer",
       textTransform: "uppercase",
@@ -54,16 +57,16 @@ const Carousel = () => {
   const classes = useStyles();
 
   const items = trending.map((coin) => {
-    let profit = coin?.price_change_percentage_24 >= 0;
+    let profit = coin?.price_change_percentage_24h >= 0;
     return (
       <Link className={classes.carouselItem} to={`/coins/${coin.id}`}>
         <img
           src={coin?.image}
           alt={coin.name}
-          height="80"
+          height="45"
           style={{
-            marginTop: 60,
-            marginBottom: 40,
+            marginTop: 30,
+            marginBottom: 20,
           }}
         />
         <span>
@@ -79,8 +82,9 @@ const Carousel = () => {
             {coin?.price_change_percentage_24h?.toFixed(2)}%
           </span>
         </span>
+
         <span style={{ fontSize: 22, fontWeight: 500 }}>
-          {symbol} {numberWithCommas.coin?.current_price.tofixed(2)}
+          {symbol} {numberWithCommas(coin?.current_price.toFixed(2))}
         </span>
       </Link>
     );

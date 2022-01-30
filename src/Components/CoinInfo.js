@@ -10,14 +10,14 @@ import { Line } from "react-chartjs-2";
 import { HistoricalChart } from "../config/api";
 import { CryptoState } from "../CryptoContext";
 
-const CoinInfo = (coin) => {
-  const [historicData, sethistoricData] = useState();
-  const [days, setdays] = useState(1);
+const CoinInfo = ({ coin }) => {
+  const [historicData, setHistoricData] = useState();
+  const [days, setDays] = useState(1);
   const { currency } = CryptoState();
 
   const fetchingHistoricData = async () => {
     const { data } = await axios.get(HistoricalChart(coin.id, days, currency));
-    sethistoricData(data.prices);
+    setHistoricData(data.prices);
   };
   console.log(historicData);
   useEffect(() => {
@@ -75,15 +75,3 @@ const CoinInfo = (coin) => {
 };
 
 export default CoinInfo;
-
-{
-  /* // import React from "react";
-
-// const CoinInfo = () => { */
-}
-{
-  /* //   return <div>coininfo</div>;
-// };
-
-// export default CoinInfo; */
-}

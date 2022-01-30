@@ -1,12 +1,12 @@
-import { makeStyles } from "@material-ui/styles";
+import { LinearProgress, makeStyles, Typography } from "@material-ui/core";
 import axios from "axios";
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SingleCoin } from "../config/api";
 import { CryptoState } from "../CryptoContext";
-import CoinInfo from "../Components/CoinInfo";
-import { LinearProgress, Typography } from "@material-ui/core";
+// import CoinInfo from "../Components/CoinInfo";
+
 import { numberWithCommas } from "../Components/CoinTable";
 // import HTMLReactParser from "html-react-parser";
 
@@ -23,6 +23,7 @@ const Coinpage = () => {
   console.log(coin);
   useEffect(() => {
     fetchCoin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const useStyles = makeStyles(() => ({
@@ -38,16 +39,16 @@ const Coinpage = () => {
     },
 
     sidebar: {
-      width: "30%",
+      width: "40%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      marginTop: 25,
+      marginTop: 15,
       borderRight: "2px solid grey",
     },
     heading: {
       fontWeight: "bold",
-      marginBottom: 20,
+      marginBottom: 10,
       fontFamily: "Montserrat",
     },
     description: {
@@ -141,7 +142,7 @@ const Coinpage = () => {
       </div>
 
       {/* chart */}
-      <CoinInfo coin={coin} />
+      {/* <CoinInfo coin={coin} /> */}
     </div>
   );
 };
